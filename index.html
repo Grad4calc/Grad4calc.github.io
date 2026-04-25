@@ -3,7 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة المعدل التراكمي والفصلي</title>
+    
+    <!-- إعدادات السيو (SEO) الأساسية -->
+    <title>حاسبة المعدل التراكمي والفصلي | احسب معدلك الجامعي</title>
+    <meta name="description" content="أداة مجانية وسريعة لحساب المعدل التراكمي والفصلي (GPA) للجامعات من 4.0. قم بإدخال الساعات والدرجات واحصل على نتيجتك بدقة.">
+    <meta name="keywords" content="حاسبة المعدل, المعدل التراكمي, المعدل الفصلي, حساب المعدل الجامعي, GPA, حاسبة GPA, احسب معدلك, جامعة">
+    <meta name="author" content="Grad4calc">
+    <meta name="robots" content="index, follow">
+
+    <!-- إعدادات المشاركة على منصات التواصل الاجتماعي (Open Graph / WhatsApp / Facebook) -->
+    <meta property="og:title" content="حاسبة المعدل التراكمي والفصلي (GPA)">
+    <meta property="og:description" content="احسب معدلك التراكمي والفصلي بسهولة من خلال هذه الأداة المجانية والسريعة.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://Grad4calc.github.io/">
+    <meta property="og:site_name" content="حاسبة المعدل">
+    
+    <!-- إعدادات تويتر (Twitter Cards) -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="حاسبة المعدل التراكمي والفصلي">
+    <meta name="twitter:description" content="أداة مجانية لحساب المعدل التراكمي والفصلي للجامعات.">
+
+    <!-- مكتبة الأيقونات (FontAwesome) لروابط التواصل -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         * {
             box-sizing: border-box;
@@ -125,6 +147,69 @@
             display: none;
             line-height: 1.6;
         }
+
+        /* تنسيقات روابط التواصل الاجتماعي */
+        .social-footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-footer a {
+            color: #95a5a6;
+            font-size: 26px;
+            transition: transform 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+        .social-footer a:hover {
+            transform: translateY(-4px); /* حركة خفيفة للأعلى عند لمس الأيقونة */
+        }
+        .social-footer a.facebook:hover { color: #1877f2; }
+        .social-footer a.twitter:hover { color: #000000; }
+        .social-footer a.instagram:hover { color: #e4405f; }
+        .social-footer a.linkedin:hover { color: #0a66c2; }
+        .social-footer a.pinterest:hover { color: #e60023; }
+        
+        /* تنسيقات حقوق النشر والباك لينك */
+        .copyright {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        .copyright a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .copyright a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        /* تنسيقات صندوق الروابط الخارجية */
+        .external-links-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fff9f0;
+            border: 1px dashed #f39c12;
+            border-radius: 8px;
+            color: #2c3e50;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .external-links-box a {
+            color: #d35400;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .external-links-box a:hover {
+            color: #e67e22;
+            text-decoration: underline;
+        }
         
         @media (max-width: 480px) {
             .course-row { flex-direction: column; }
@@ -185,6 +270,29 @@
     </div>
 
     <div class="result-box" id="result-box"></div>
+
+    <!-- صندوق الأنظمة الأخرى (من 5 و 100) -->
+    <div class="external-links-box">
+        💡 <strong>هل نظام جامعتك مختلف؟</strong> 
+        <br>
+        يمكنك حساب المعدل التراكمي من <strong>5</strong> أو بنظام <strong>النسبة المئوية (100%)</strong> عبر الانتقال إلى: 
+        <a href="https://hasbati.com/gpa-calculator/" target="_blank" title="حاسبة المعدل التراكمي من 5 ومن 100">حاسبة المعدل الشاملة في موقع حاسبتي</a>
+    </div>
+
+    <!-- روابط التواصل الاجتماعي -->
+    <div class="social-footer">
+        <a href="https://www.facebook.com/hasbaticom/" target="_blank" class="fa-brands fa-facebook facebook" title="فيسبوك"></a>
+        <a href="https://x.com/hasbaticom" target="_blank" class="fa-brands fa-x-twitter twitter" title="إكس (تويتر)"></a>
+        <a href="https://www.instagram.com/hasbaticom/" target="_blank" class="fa-brands fa-instagram instagram" title="إنستغرام"></a>
+        <a href="https://www.linkedin.com/company/hasbaticom/" target="_blank" class="fa-brands fa-linkedin linkedin" title="لينكد إن"></a>
+        <a href="https://www.pinterest.com/hasbaticom/" target="_blank" class="fa-brands fa-pinterest pinterest" title="بينتريست"></a>
+    </div>
+
+    <!-- حقوق النشر والباك لينك -->
+    <div class="copyright">
+        جميع الحقوق محفوظة &copy; 2026 لموقع <a href="https://hasbati.com/" target="_blank" title="موقع حاسبتي">حاسبتي</a>
+    </div>
+
 </div>
 
 <script>
