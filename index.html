@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة المعدل التراكمي والفصلي</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h2 { 
+            color: #2c3e50; 
+            margin-bottom: 20px; 
+            font-size: 24px;
+        }
+        h3 {
+            color: #34495e;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        input, select, button {
+            padding: 12px;
+            border: 1px solid #dcdde1;
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+        }
+        input { 
+            flex: 1;
+            min-width: 150px;
+        }
+        .course-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9fbfd;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+        }
+        .course-row select {
+            flex: 1;
+        }
+        .btn-add { 
+            background-color: #2ecc71; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-add:hover { background-color: #27ae60; }
+        
+        .btn-remove { 
+            background-color: #e74c3c; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            padding: 12px 15px; 
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .btn-remove:hover { background-color: #c0392b; }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+        }
+        .btn-calc {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .btn-calc:hover { background-color: #2980b9; }
+        
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #e8f6f3;
+            border: 1px solid #1abc9c;
+            border-radius: 8px;
+            color: #16a085;
+            font-weight: bold;
+            font-size: 18px;
+            display: none;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 480px) {
+            .course-row { flex-direction: column; }
+            .btn-remove { width: 100%; }
+            .actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎓 حاسبة المعدل التراكمي (من 4.0)</h2>
+    
+    <!-- البيانات السابقة -->
+    <div class="input-group">
+        <input type="number" id="prev-hours" placeholder="عدد الساعات المقطوعة سابقاً" min="0">
+        <input type="number" id="prev-gpa" placeholder="المعدل التراكمي السابق" min="0" max="4" step="0.01">
+    </div>
+
+    <hr style="border: 0; height: 1px; background-color: #eee; margin: 25px 0;">
+    <h3>📚 مواد الفصل الحالي</h3>
+    
+    <!-- حاوية المواد -->
+    <div id="courses-container">
+        <div class="course-row">
+            <select class="credits">
+                <option value="" disabled selected>عدد الساعات</option>
+                <option value="1">1 ساعة</option>
+                <option value="2">2 ساعة</option>
+                <option value="3">3 ساعات</option>
+                <option value="4">4 ساعات</option>
+                <option value="5">5 ساعات</option>
+                <option value="6">6 ساعات</option>
+            </select>
+            <select class="grade">
+                <option value="" disabled selected>الرمز (الدرجة)</option>
+                <option value="4.0">A  (ممتاز مرتفع)</option>
+                <option value="3.75">A- (ممتاز)</option>
+                <option value="3.5">B+ (جيد جداً مرتفع)</option>
+                <option value="3.0">B  (جيد جداً)</option>
+                <option value="2.75">B- (جيد مرتفع)</option>
+                <option value="2.5">C+ (جيد)</option>
+                <option value="2.0">C  (مقبول مرتفع)</option>
+                <option value="1.75">C- (مقبول)</option>
+                <option value="1.5">D+ (ضعيف مرتفع)</option>
+                <option value="1.0">D  (ضعيف)</option>
+                <option value="0.0">F  (راسب)</option>
+            </select>
+            <button class="btn-remove" onclick="removeCourse(this)" title="حذف المادة">X</button>
+        </div>
+    </div>
+
+    <button class="btn-add" onclick="addCourse()">+ إضافة مادة أخرى</button>
+
+    <div class="actions">
+        <button class="btn-calc" onclick="calculate('semester')">حساب الفصلي</button>
+        <button class="btn-calc" onclick="calculate('cumulative')">حساب التراكمي</button>
+    </div>
+
+    <div class="result-box" id="result-box"></div>
+</div>
+
+<script>
+    // دالة لإضافة مادة جديدة
+    function addCourse() {
+        const container = document.getElementById('courses-container');
+        const row = document.createElement('div');
+        row.className = 'course-row';
+        row.innerHTML = `
+            <select class="credits">
+                <option value="" disabled selected>عدد الساعات</option>
+                <option value="1">1 ساعة</option>
+                <option value="2">2 ساعة</option>
+                <option value="3">3 ساعات</option>
+                <option value="4">4 ساعات</option>
+                <option value="5">5 ساعات</option>
+                <option value="6">6 ساعات</option>
+            </select>
+            <select class="grade">
+                <option value="" disabled selected>الرمز (الدرجة)</option>
+                <option value="4.0">A  (ممتاز مرتفع)</option>
+                <option value="3.75">A- (ممتاز)</option>
+                <option value="3.5">B+ (جيد جداً مرتفع)</option>
+                <option value="3.0">B  (جيد جداً)</option>
+                <option value="2.75">B- (جيد مرتفع)</option>
+                <option value="2.5">C+ (جيد)</option>
+                <option value="2.0">C  (مقبول مرتفع)</option>
+                <option value="1.75">C- (مقبول)</option>
+                <option value="1.5">D+ (ضعيف مرتفع)</option>
+                <option value="1.0">D  (ضعيف)</option>
+                <option value="0.0">F  (راسب)</option>
+            </select>
+            <button class="btn-remove" onclick="removeCourse(this)" title="حذف المادة">X</button>
+        `;
+        container.appendChild(row);
+    }
+
+    // دالة لحذف المادة
+    function removeCourse(btn) {
+        btn.parentElement.remove();
+    }
+
+    // دالة الحساب
+    function calculate(type) {
+        const rows = document.querySelectorAll('.course-row');
+        let currentPoints = 0;
+        let currentCredits = 0;
+
+        // حساب نقاط الفصل الحالي
+        rows.forEach(row => {
+            const credits = parseFloat(row.querySelector('.credits').value);
+            const grade = parseFloat(row.querySelector('.grade').value);
+            
+            if (!isNaN(credits) && !isNaN(grade)) {
+                currentPoints += (credits * grade);
+                currentCredits += credits;
+            }
+        });
+
+        const resultBox = document.getElementById('result-box');
+        resultBox.style.display = 'block';
+
+        if (currentCredits === 0 && type === 'semester') {
+            resultBox.style.backgroundColor = '#fdeded';
+            resultBox.style.borderColor = '#e74c3c';
+            resultBox.style.color = '#c0392b';
+            resultBox.innerHTML = "⚠️ الرجاء إدخال ساعات ودرجات مواد الفصل الحالي بشكل صحيح.";
+            return;
+        }
+
+        const semesterGPA = currentCredits > 0 ? (currentPoints / currentCredits).toFixed(2) : 0;
+
+        if (type === 'semester') {
+            resultBox.style.backgroundColor = '#e8f6f3';
+            resultBox.style.borderColor = '#1abc9c';
+            resultBox.style.color = '#16a085';
+            resultBox.innerHTML = `معدلك الفصلي هو: <span style="font-size: 24px;">${semesterGPA}</span>`;
+        } else if (type === 'cumulative') {
+            const prevHours = parseFloat(document.getElementById('prev-hours').value) || 0;
+            const prevGPA = parseFloat(document.getElementById('prev-gpa').value) || 0;
+
+            if (prevHours === 0 && currentCredits === 0) {
+                resultBox.style.backgroundColor = '#fdeded';
+                resultBox.style.borderColor = '#e74c3c';
+                resultBox.style.color = '#c0392b';
+                resultBox.innerHTML = "⚠️ الرجاء إدخال البيانات السابقة أو الحالية لحساب التراكمي.";
+                return;
+            }
+
+            const totalPoints = (prevHours * prevGPA) + currentPoints;
+            const totalCredits = prevHours + currentCredits;
+            const cumulativeGPA = (totalPoints / totalCredits).toFixed(2);
+
+            resultBox.style.backgroundColor = '#e8f4fd';
+            resultBox.style.borderColor = '#3498db';
+            resultBox.style.color = '#2980b9';
+            resultBox.innerHTML = `معدلك التراكمي الجديد هو: <span style="font-size: 24px;">${cumulativeGPA}</span><br>
+                                   إجمالي الساعات المقطوعة: <strong>${totalCredits}</strong> ساعة`;
+        }
+    }
+</script>
+
+</body>
+</html>
